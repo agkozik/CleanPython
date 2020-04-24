@@ -1,0 +1,25 @@
+import time
+class Indenter:
+    def __init__(self):
+        self.level = 0
+
+    def __enter__(self):
+        self.level += 1
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.level = 1
+
+    def print(self, text):
+        print('\t' * self.level + text + str(time.strftime(" %H:%M:%S:%m")))
+
+
+with Indenter() as indent:
+    indent.print('Privet')
+    with indent:
+        indent.print('Hi')
+        with indent:
+            indent.print('Bonjur')
+    indent.print('Buy!')
+
+
